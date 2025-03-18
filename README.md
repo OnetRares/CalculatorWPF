@@ -36,6 +36,6 @@ Properties/Settings.settings – Stocarea persistentă a setărilor utilizatorul
 
 # 📦 Dependențe
 
-.NET 6.0 (sau mai recent)
+.NET 8.0
 
 WPF (Windows Presentation Foundation)
