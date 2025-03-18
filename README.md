@@ -32,6 +32,12 @@ StandardCalculatorViewModel.cs – Logica pentru calculatorul standard.
 
 ProgrammerCalculatorViewModel.cs – Logica pentru calculatorul programer.
 
+ExpresionInputView & ExpresionInputWindow- Interfată și logica cu ordinea operațiilor
+
+MemoryStackWindow- Interfată și logica pentru fereastra de memorie a calculatorului.
+
+Themes- Modelul calculatorului, folosind culori și gradienți
+
 Properties/Settings.settings – Stocarea persistentă a setărilor utilizatorului.
 
 # 📦 Dependențe
