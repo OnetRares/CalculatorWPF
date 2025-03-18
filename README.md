@@ -22,7 +22,7 @@ Aceasta este o aplicație de calculator dezvoltată în C# folosind WPF. Aplica�
 
 ▶️ Compilează și rulează aplicația.
 
-📁 Structura Proiectului
+# 📁 Structura Proiectului
 
 MainWindow.xaml & MainWindow.xaml.cs – Interfața și logica pentru modul Standard.
 
