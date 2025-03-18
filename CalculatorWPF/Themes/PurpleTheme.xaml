@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="Row0Button">#E1BEE7</SolidColorBrush>
+    <SolidColorBrush x:Key="Row1Button">#D1A6D9</SolidColorBrush>
+    <SolidColorBrush x:Key="Row2Button">#BA68C8</SolidColorBrush>
+    <SolidColorBrush x:Key="Row3Button">#AB47BC</SolidColorBrush>
+    <SolidColorBrush x:Key="Row4Button">#9C27B0</SolidColorBrush>
+    <SolidColorBrush x:Key="Row5Button">#8E24AA</SolidColorBrush>
+    <SolidColorBrush x:Key="Row6Button">#7B1FA2</SolidColorBrush>
+
+    <LinearGradientBrush x:Key="AppBackground" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0.0" Color="#E1BEE7"/>
+        <GradientStop Offset="1.0" Color="#9C27B0"/>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="ButtonBackground" Color="#AB47BC"/>
+    <SolidColorBrush x:Key="ButtonForeground" Color="White"/>
+
+</ResourceDictionary>

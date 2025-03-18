@@ -1,0 +1,48 @@
+﻿<Window x:Class="CalculatorWPF.MemoryStackWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Memory Stack" Height="400" Width="700"
+        Background="{DynamicResource AppBackground}" Foreground="Black">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Mergi la tema ta albastră -->
+                <ResourceDictionary Source="Themes/BlueTheme.xaml"/>
+                <ResourceDictionary Source="Themes/Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <DockPanel Background="{DynamicResource AppBackground}" Margin="10">
+        <!-- Titlu -->
+        <TextBlock Text="Memory Stack" FontSize="18" FontWeight="Bold" 
+                   Foreground="Black" HorizontalAlignment="Center" Margin="5"/>
+
+        <!-- ListBox pentru afișarea memoriei -->
+        <ListBox x:Name="MemoryListBox" 
+                 ItemsSource="{Binding MemoryStack}" 
+                 Background="{DynamicResource Row5Button}" Foreground="{DynamicResource ButtonBackground}"
+                 BorderThickness="0" Margin="5" Padding="5">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="1" BorderBrush="#555" CornerRadius="8" Padding="5" Margin="5">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <!-- Afișează valoarea -->
+                            <TextBlock Text="{Binding}" Foreground="Black" FontWeight="Black" FontSize="18" Width="200"
+                                       VerticalAlignment="Center" Margin="10,0"/>
+
+                            <!-- Butoane stilizate -->
+                            <StackPanel Orientation="Horizontal" Margin="5">
+                                <Button Content="MC" Click="RemoveFromMemory_Click" Style="{StaticResource MemoryButtonStyle}"/>
+                                <Button Content="M+" Click="AddToMemory_Click" Style="{StaticResource MemoryButtonStyle}"/>
+                                <Button Content="M-" Click="SubtractFromMemory_Click" Style="{StaticResource MemoryButtonStyle}"/>
+                                <Button Content="Use" Click="UseMemoryValue_Click" Style="{StaticResource MemoryButtonStyle}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
+</Window>

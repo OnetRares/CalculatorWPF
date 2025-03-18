@@ -1,0 +1,19 @@
+﻿<Window x:Class="CalculatorWPF.ExpressionInputWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CalculatorWPF"
+        mc:Ignorable="d"
+        Title="ExpressionInputWindow" Height="450" Width="800">
+    <Grid>
+        <TextBox Text="{Binding Expression, UpdateSourceTrigger=PropertyChanged}" 
+                 Margin="10" Height="30"/>
+
+        <Button Content="Calculează" Command="{Binding CalculateCommand}" 
+                Margin="10,50,10,10" Height="30"/>
+
+        <Button Content="Închide" Command="{Binding CloseCommand}" 
+                Margin="10,90,10,10" Height="30"/>
+    </Grid>
+</Window>

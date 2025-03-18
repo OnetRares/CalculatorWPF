@@ -1,0 +1,208 @@
+﻿<Window x:Class="CalculatorWPF.ProgrammerMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:local="clr-namespace:CalculatorWPF"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CandyCalc - Programmer Mode" Height="700" Width="400" ResizeMode="NoResize" 
+        
+        KeyDown="Window_KeyDown">
+
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/BlueTheme.xaml"/>
+                <ResourceDictionary Source="Themes/Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <DockPanel Background="{DynamicResource AppBackground}">
+        <!-- Bara de meniu -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Settings">
+                <MenuItem Header="Standard" Command="{Binding StandardModeCommand}"/>
+                <MenuItem Header="Programmer" Command="{Binding ProgrammerModeCommand}"/>
+                <MenuItem Header="Help">
+                    <MenuItem Header="About" Command="{Binding AboutCommnad}"/>
+                </MenuItem>
+                <MenuItem Header="File">
+                    <MenuItem Header="Cut" Command="{Binding CutCommand}"/>
+                    <MenuItem Header="Copy" Command="{Binding CopyCommand}"/>
+                    <MenuItem Header="Paste" Command="{Binding PasteCommand}"/>
+                    <MenuItem Header="DigitGrouping" Command="{Binding DigitalGroupingCommand}"/>
+                </MenuItem>
+                <MenuItem Header="Base">
+                    <Button Content="Binary"  Click ="ChangeBaseCommand" />
+                    <Button Content="Octal"   Click ="ChangeBaseCommand"/>
+                    <Button Content="Decimal"   Click ="ChangeBaseCommand"/>
+                    <Button Content="Hexadecimal"  Click ="ChangeBaseCommand"/>
+                </MenuItem>
+                <MenuItem Header="Calculate include order operation" Click="OpenExpressionInputWindow"/>
+                <MenuItem Header="Theme">
+                    <MenuItem Header="BlueTheme"  Click="ChangeThemeButton_Click"/>
+                    <MenuItem Header="GreenTheme" Click="ChangeThemeButton_Click"/>
+                    <MenuItem Header="RedTheme" Click="ChangeThemeButton_Click"/>
+                    <MenuItem Header="PinkTheme" Click="ChangeThemeButton_Click"/>
+                    <MenuItem Header="YellowTheme" Click="ChangeThemeButton_Click"/>
+                    <MenuItem Header="PurpleTheme" Click="ChangeThemeButton_Click"/>
+                </MenuItem>
+            </MenuItem>
+            
+        </Menu>
+
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <!-- Display principal -->
+                <RowDefinition Height="Auto"/>
+                <!-- Panou pentru conversii în diferite baze -->
+                <RowDefinition Height="Auto"/>
+                <!-- Zona pentru butoane (calculator) -->
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Display-ul principal -->
+            <TextBox x:Name="txtDisplay"
+                     Grid.Row="0"
+                     Height="60"
+                     FontSize="24"
+                     Text="{Binding Display, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="5"
+                     IsReadOnly="True"
+                     TextAlignment="Right"/>
+
+            
+            <!-- Panou pentru afișarea conversiilor (BIN, OCT, DEC, HEX) -->
+            <Grid Grid.Row="1" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+                    <TextBlock Text="BIN: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding BinaryDisplay}"/>
+                </StackPanel>
+
+                <!-- Afișare OCT -->
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+                    <TextBlock Text="OCT: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding OctalDisplay}"/>
+                </StackPanel>
+
+                <!-- Afișare DEC -->
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
+                    <TextBlock Text="DEC: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding DecimalDisplay}"/>
+                </StackPanel>
+
+                <!-- Afișare HEX -->
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+                    <TextBlock Text="HEX: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding HexDisplay}"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Zona pentru butoanele calculatorului (poți reutiliza grila din modul standard) -->
+            <Grid Grid.Row="2" Name="ProgrammerMain" Margin="5">
+                <!-- Exemplu de grilă: ajustează conform nevoilor tale -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Row="0" Grid.Column="0" Style="{DynamicResource Row0ButtonStyle}"  Content="MC" Command="{Binding MemoryClearCommand}" Margin="5" />
+                <Button Grid.Row="0" Grid.Column="1"  Style="{DynamicResource Row0ButtonStyle}" Content="M+" Command="{Binding MemoryAddCommand}" Margin="5" />
+                <Button Grid.Row="0" Grid.Column="2"  Style="{DynamicResource Row0ButtonStyle}" Content="M-" Command="{Binding MemorySubtractCommand}" Margin="5" />
+                <Button Grid.Row="0" Grid.Column="3"  Style="{DynamicResource Row0ButtonStyle}" Content="MS" Command="{Binding MemoryStoreCommand}" Margin="5"/>
+                <Button Grid.Row="0" Grid.Column="4"  Style="{DynamicResource Row0ButtonStyle}" Content="M>" Command="{Binding MemoryStackCommand}" Margin="5"/>
+
+                <!-- Exemplu: rândul 0 -->
+                <Button Grid.Row="1" Grid.Column="0" Content="%" Style="{DynamicResource Row1ButtonStyle}" Command="{Binding FunctionCommand}" CommandParameter="%" Margin="5" />
+                <Button Grid.Row="1" Grid.Column="1" Content="CE"  Style="{DynamicResource Row1ButtonStyle}" Command="{Binding ClearEntryCommand}" Margin="5" />
+                <Button Grid.Row="1" Grid.Column="2" Content="C "  Style="{DynamicResource Row1ButtonStyle}" Command="{Binding ClearCommand}" Margin="5" />
+                <Button Grid.Row="1" Grid.Column="3" Content="⌫"  Style="{DynamicResource Row1ButtonStyle}" Command="{Binding BackspaceCommand}" Margin="5" />
+                <Button Grid.Row="1" Grid.Column="4" Content="A"  Style="{DynamicResource Row1ButtonStyle}" Margin="5" Command="{Binding DigitCommand}"  CommandParameter="A" >
+           
+                </Button>
+
+                <!-- Rândul 1 -->
+                <Button Grid.Row="2" Grid.Column="0"  Style="{DynamicResource Row2ButtonStyle}" Content="1/x" Command="{Binding FunctionCommand}" CommandParameter="1/x" Margin="5" />
+                <Button Grid.Row="2" Grid.Column="1"  Style="{DynamicResource Row2ButtonStyle}" Content="x²" Command="{Binding FunctionCommand}" CommandParameter="x²" Margin="5" />
+                <Button Grid.Row="2" Grid.Column="2" Style="{DynamicResource Row2ButtonStyle}"  Content="√" Command="{Binding FunctionCommand}" CommandParameter="√" Margin="5"/>
+                <Button Grid.Row="2" Grid.Column="3" Style="{DynamicResource Row2ButtonStyle}" Content="÷" Command="{Binding OperatorCommand}" CommandParameter="÷" Margin="5"/>
+                <Button Grid.Row="2" Grid.Column="4" Style="{DynamicResource Row2ButtonStyle}" Content="B" Margin="5" Command="{Binding DigitCommand}"   CommandParameter="B"> 
+                
+                </Button>
+
+                <!-- Rândul 2 -->
+                <Button Grid.Row="3" Grid.Column="0" Style="{DynamicResource Row3ButtonStyle}" Content="7" Margin="5" Command="{Binding DigitCommand}"  CommandParameter="7" >
+
+                </Button>
+                <Button Grid.Row="3" Grid.Column="1"  Style="{DynamicResource Row3ButtonStyle}" Content="8" Margin="5" Command="{Binding DigitCommand}"   CommandParameter="8" >
+                </Button>
+                <Button Grid.Row="3" Grid.Column="2" Style="{DynamicResource Row3ButtonStyle}" Content="9" Margin="5" Command="{Binding DigitCommand}"   CommandParameter="9">
+                    
+                </Button>
+                <Button Grid.Row="3" Grid.Column="3" Style="{DynamicResource Row3ButtonStyle}" Content="×" Command="{Binding OperatorCommand}" CommandParameter="×" Margin="5" />
+                <Button Grid.Row="3" Grid.Column="4" Style="{DynamicResource Row3ButtonStyle}" Content="C" Margin="5" Command="{Binding DigitCommand}"   CommandParameter="C">
+                
+                </Button>
+
+                <!-- Rândul 3 -->
+                <Button Grid.Row="4" Grid.Column="0" Content="4" Style="{DynamicResource Row4ButtonStyle}" Margin="5" Command="{Binding DigitCommand}"   CommandParameter="4" >
+                
+                </Button>
+                <Button Grid.Row="4" Grid.Column="1"  Style="{DynamicResource Row4ButtonStyle}"  Content="5" Margin="5" Command="{Binding DigitCommand}"  CommandParameter="5" >
+                  
+                </Button>
+                <Button Grid.Row="4" Grid.Column="2" Style="{DynamicResource Row4ButtonStyle}"  Content="6" Margin="5" Command="{Binding DigitCommand}"   CommandParameter="6" >
+              
+                </Button>
+                <Button Grid.Row="4" Grid.Column="3" Style="{DynamicResource Row4ButtonStyle}"   Content="-" Command="{Binding OperatorCommand}" CommandParameter="-" Margin="5" />
+                <Button Grid.Row="4" Grid.Column="4" Style="{DynamicResource Row4ButtonStyle}"   Content="D" Margin="5" Command="{Binding DigitCommand}"  CommandParameter="D"/>
+
+
+
+                <!-- Rândul 4 -->
+                <Button Grid.Row="5" Grid.Column="0" Style="{DynamicResource Row5ButtonStyle}"  Content="1" Margin="5" Command="{Binding DigitCommand}" CommandParameter="1"/>
+
+
+                <Button Grid.Row="5" Grid.Column="1" Style="{DynamicResource Row5ButtonStyle}"  Content="2" Margin="2" Command="{Binding DigitCommand}"  CommandParameter="2">
+                    
+                </Button>
+                <Button Grid.Row="5" Grid.Column="2" Style="{DynamicResource Row5ButtonStyle}"  Content="3" Margin="3" Command="{Binding DigitCommand}" CommandParameter="3">
+                    
+                </Button>
+                <Button Grid.Row="5" Grid.Column="3" Style="{DynamicResource Row5ButtonStyle}"  Content="+" Command="{Binding OperatorCommand}" CommandParameter="+" Margin="5" />
+                <Button Grid.Row="5" Grid.Column="4" Style="{DynamicResource Row5ButtonStyle}" Content="E" Margin="5" Command="{Binding DigitCommand}"  CommandParameter="E" >
+                    
+                </Button>
+
+                <!-- Rândul 5 -->
+                <Button Grid.Row="6" Grid.Column="0" Style="{DynamicResource Row6ButtonStyle}" Content="+/-" Command="{Binding FunctionCommand}" CommandParameter="+/-" Margin="5" />
+                <Button Grid.Row="6" Grid.Column="1" Style="{DynamicResource Row6ButtonStyle}" Content="0" Command="{Binding DigitCommand}" CommandParameter="0" Margin="5" />
+                <Button Grid.Row="6" Grid.Column="2" Style="{DynamicResource Row6ButtonStyle}" Content="." CommandParameter="." Margin="5" />
+                <Button Grid.Row="6" Grid.Column="3" Style="{DynamicResource Row6ButtonStyle}" Content="=" Command="{Binding EqualCommand}" Margin="5" />
+                <Button Grid.Row="6" Grid.Column="4" Style="{DynamicResource Row6ButtonStyle}" Content="F" Margin="5" Command="{Binding DigitCommand}"  CommandParameter="F">
+                
+                </Button>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window> 
